@@ -1,25 +1,45 @@
 package com.ll;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 public class Calc {
-    public static int run(String s){
-        String[] bits = s.split(" ");
-        int result = 0;
+    public static int run(String exp){
+        if (!exp.contains(" ")) return Integer.parseInt(exp);
 
-        int a = Integer.parseInt(bits[0]);
-        int b = Integer.parseInt(bits[2]);
-        String operator = bits[1];
+        boolean needToMulti = exp.contains("*");
+        boolean needToPlus = exp.contains("+") || exp.contains("-");
 
-        if(operator.equals("+")) result = a+b;
-        else if (operator.equals("-")) result = a-b;
+        boolean needToCompound = needToMulti && needToPlus;
 
-        if(bits.length == 3) return result;
+        if ( needToCompound ) {
+            String[] bits = exp.split(" \\+ ");
 
-        String operator2 = bits[3];
-        int c = Integer.parseInt(bits[4]);
+            String newExp = Arrays.stream(bits)
+                    .mapToInt(Calc::run)
+                    .mapToObj(e -> e + "")
+                    .collect(Collectors.joining(" + "));
 
-        if(operator2.equals("+")) return result + c;
-        else if (operator2.equals("-")) return result - c;
+            return run(newExp);
+        } else if ( needToPlus ) {
+            exp = exp.replaceAll("- ", "+ -");
+            String[] bits = exp.split(" \\+ ");
 
-        return -1;
+            int sum = 0;
+            for (int i = 0; i < bits.length; i++) {
+                sum += Integer.parseInt(bits[i]);
+            }
+            return sum;
+        } else if ( needToMulti ) {
+            String[] bits = exp.split(" \\* ");
+
+            int sum = 1;
+            for (int i = 0; i < bits.length; i++) {
+                sum *= Integer.parseInt(bits[i]);
+            }
+            return sum;
+        }
+
+        throw new RuntimeException("올바른 계산식이 아닙니다.");
     }
 }
