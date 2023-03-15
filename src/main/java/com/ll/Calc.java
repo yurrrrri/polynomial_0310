@@ -20,10 +20,17 @@ public class Calc {
             int bracketStart = 0;
             int bracketEnd = 0;
             for(int i=0; i<exp.length(); i++){
-                if(exp.charAt(i) == '(')
+                if(exp.charAt(i) == '('){
                     bracketStart = i;
-                else if(exp.charAt(i) == ')')
+                    break;
+                }
+            }
+
+            for(int i=exp.length()-1; i>=0; i--){
+                if(exp.charAt(i) == ')') {
                     bracketEnd = i;
+                    break;
+                }
             }
 
             if(bracketStart != 0){

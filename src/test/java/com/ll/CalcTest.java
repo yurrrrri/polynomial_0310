@@ -61,20 +61,26 @@ public class CalcTest {
     }
 
     @Test
-    @DisplayName("(10 + 20) * 3 == 90")
+    @DisplayName("((10 + 20)) + 20 == 50")
     void t10() {
+        assertThat(Calc.run("((10 + 20)) + 20")).isEqualTo(50);
+    }
+
+    @Test
+    @DisplayName("(10 + 20) * 3 == 90")
+    void t11() {
         assertThat(Calc.run("(10 + 20) * 3")).isEqualTo(90);
     }
 
     @Test
     @DisplayName("10 + (10 + 5) == 25")
-    void t11() {
+    void t12() {
         assertThat(Calc.run("10 + (10 + 5)")).isEqualTo(25);
     }
 
     @Test
     @DisplayName("-(10 + 5) == -15")
-    void t12() {
+    void t13() {
         assertThat(Calc.run("-(10 + 5)")).isEqualTo(-15);
     }
 }
