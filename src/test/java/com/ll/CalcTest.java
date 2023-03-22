@@ -83,4 +83,10 @@ public class CalcTest {
     void t13() {
         assertThat(Calc.run("-(10 + 5)")).isEqualTo(-15);
     }
+
+    @Test
+    @DisplayName("-(9 + 1) * -(8 + 2) == 100")
+    void t16() {
+        assertThat(Calc.run("-(9 + 1) * -(8 + 2)")).isEqualTo(100);
+    }
 }
